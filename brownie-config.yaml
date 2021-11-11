@@ -1,0 +1,15 @@
+dependencies:
+  - Openzeppelin/openzeppelin-contracts@4.3.2
+  - smartcontractkit/chainlink-brownie-contracts@0.2.2
+compiler:
+  solc:
+    remappings:
+      - '@openzeppelin=Openzeppelin/openzeppelin-contracts@4.3.2'
+      - '@chainlink=smartcontractkit/chainlink-brownie-contracts@0.2.2'
+dotenv: .env
+wallets:
+  from_key: ${PRIVATE_KEY}
+networks:
+  default: development
+  kovan:
+    eth: '0x9326BFA02ADD2366b30bacB125260Af641031331'
