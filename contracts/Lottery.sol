@@ -4,15 +4,14 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
-
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
-contract lottery is VRFConsumerBase, Ownable {
+contract Lottery is VRFConsumerBase, Ownable {
     address payable[] public players;
     uint256 public minimumUSD;
     bytes32 public keyHash;
     uint256 public fee;
-
+    address payable public recentWinner;
     uint256 randomness;
     AggregatorV3Interface public priceFeed;
     LOTTERY_STATE public lottery_state;
@@ -73,7 +72,7 @@ contract lottery is VRFConsumerBase, Ownable {
         require(lottery_state == LOTTERY_STATE.CALCULAING_WINNER);
         require(_randomness > 0, "Random number not found!");
         uint256 winner = _randomness % players.length;
-        address payable recentWinner = players[winner];
+        recentWinner = players[winner];
         recentWinner.transfer(address(this).balance);
         players = new address payable[](0);
         lottery_state = LOTTERY_STATE.CLOSED;
